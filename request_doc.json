@@ -1,0 +1,973 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/users/": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get Users",
+        "operationId": "get_users_users__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Users Users  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["User"],
+        "summary": "Create User",
+        "operationId": "create_user_users__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete User",
+        "operationId": "delete_user_users__user_id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User Id",
+              "type": "integer"
+            },
+            "name": "user_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/": {
+      "get": {
+        "tags": ["Customer"],
+        "summary": "Get Customers",
+        "operationId": "get_customers_customers__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Customers Customers  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Customer"],
+        "summary": "Create Customer",
+        "operationId": "create_customer_customers__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customer_id}": {
+      "delete": {
+        "tags": ["Customer"],
+        "summary": "Delete Customer",
+        "operationId": "delete_customer_customers__customer_id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Customer Id",
+              "type": "integer"
+            },
+            "name": "customer_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer-display-config/": {
+      "get": {
+        "tags": ["Customer Display Configuration"],
+        "summary": "Get All Display Configs",
+        "operationId": "get_all_display_configs_customer_display_config__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get All Display Configs Customer Display Config  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerDisplayConfiguration"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Customer Display Configuration"],
+        "summary": "Create Display Config",
+        "operationId": "create_display_config_customer_display_config__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerDisplayConfigurationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDisplayConfiguration"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer-display-config/{display_config_id}": {
+      "get": {
+        "tags": ["Customer Display Configuration"],
+        "summary": "Get Display Config By Id",
+        "operationId": "get_display_config_by_id_customer_display_config__display_config_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Display Config Id",
+              "type": "integer"
+            },
+            "name": "display_config_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDisplayConfiguration"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Customer Display Configuration"],
+        "summary": "Update Display Config By Id",
+        "operationId": "update_display_config_by_id_customer_display_config__display_config_id__put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Display Config Id",
+              "type": "integer"
+            },
+            "name": "display_config_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerDisplayConfigurationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDisplayConfiguration"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Customer Display Configuration"],
+        "summary": "Delete Display Config By Id",
+        "operationId": "delete_display_config_by_id_customer_display_config__display_config_id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Display Config Id",
+              "type": "integer"
+            },
+            "name": "display_config_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/display-column/": {
+      "post": {
+        "tags": ["Display Column"],
+        "summary": "Create Display Column",
+        "operationId": "create_display_column_display_column__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDisplayColumnRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisplayColumn"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/display-column/customer-config/{customer_display_config_id}": {
+      "get": {
+        "tags": ["Display Column"],
+        "summary": "Get Display Columns For Customer Display Config",
+        "operationId": "get_display_columns_for_customer_display_config_display_column_customer_config__customer_display_config_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Customer Display Config Id",
+              "type": "integer"
+            },
+            "name": "customer_display_config_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Display Columns For Customer Display Config Display Column Customer Config  Customer Display Config Id  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DisplayColumn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/display-column/{display_column_id}": {
+      "put": {
+        "tags": ["Display Column"],
+        "summary": "Update Display Column",
+        "operationId": "update_display_column_display_column__display_column_id__put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Display Column Id",
+              "type": "integer"
+            },
+            "name": "display_column_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDisplayColumnRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisplayColumn"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Display Column"],
+        "summary": "Delete Display Column",
+        "operationId": "delete_display_column_display_column__display_column_id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Display Column Id",
+              "type": "integer"
+            },
+            "name": "display_column_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateCustomerDisplayConfigurationRequest": {
+        "title": "CreateCustomerDisplayConfigurationRequest",
+        "required": [
+          "customer_id",
+          "display_name",
+          "is_default",
+          "is_active",
+          "start_year",
+          "end_year"
+        ],
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "integer"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "is_default": {
+            "title": "Is Default",
+            "type": "boolean"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "start_year": {
+            "title": "Start Year",
+            "type": "integer"
+          },
+          "end_year": {
+            "title": "End Year",
+            "type": "integer"
+          }
+        }
+      },
+      "CreateDisplayColumnRequest": {
+        "title": "CreateDisplayColumnRequest",
+        "required": [
+          "customer_display_configuration_id",
+          "column_label",
+          "column_order",
+          "is_active",
+          "data_type",
+          "data_display_type",
+          "data_options"
+        ],
+        "type": "object",
+        "properties": {
+          "customer_display_configuration_id": {
+            "title": "Customer Display Configuration Id",
+            "type": "integer"
+          },
+          "column_label": {
+            "title": "Column Label",
+            "type": "string"
+          },
+          "column_order": {
+            "title": "Column Order",
+            "type": "integer"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "data_type": {
+            "$ref": "#/components/schemas/SupportedDataTypes"
+          },
+          "data_display_type": {
+            "$ref": "#/components/schemas/DataDisplayType"
+          },
+          "data_options": {
+            "title": "Data Options",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Customer": {
+        "title": "Customer",
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "description": "Customer name"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean",
+            "description": "Is customer active",
+            "default": true
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CustomerCreateRequest": {
+        "title": "CustomerCreateRequest",
+        "required": ["name", "is_active"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          }
+        }
+      },
+      "CustomerDisplayConfiguration": {
+        "title": "CustomerDisplayConfiguration",
+        "required": ["customer_id", "display_name", "start_year", "end_year"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "integer"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string",
+            "description": "Display name of the configuration, like a heading of a presentation."
+          },
+          "is_default": {
+            "title": "Is Default",
+            "type": "boolean",
+            "description": "Is this the default configuration. May be used when a user logs in.",
+            "default": false
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean",
+            "description": "Is this configuration active",
+            "default": true
+          },
+          "start_year": {
+            "title": "Start Year",
+            "type": "integer",
+            "description": "Start year of the configuration"
+          },
+          "end_year": {
+            "title": "End Year",
+            "type": "integer",
+            "description": "End year of the configuration"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DataDisplayType": {
+        "title": "DataDisplayType",
+        "enum": ["slider", "picklist", "text", "float", "boolean", "integer"],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "DisplayColumn": {
+        "title": "DisplayColumn",
+        "required": [
+          "customer_display_configuration_id",
+          "column_label",
+          "column_order",
+          "data_type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "customer_display_configuration_id": {
+            "title": "Customer Display Configuration Id",
+            "type": "integer",
+            "description": "The display configuration this column belongs to"
+          },
+          "column_label": {
+            "title": "Column Label",
+            "type": "string",
+            "description": "Label of the column"
+          },
+          "column_order": {
+            "title": "Column Order",
+            "type": "integer",
+            "description": "Order of the column in the display configuration"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean",
+            "description": "Is this column active",
+            "default": true
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "data_type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SupportedDataTypes"
+              }
+            ],
+            "description": "What does this data represent. Example: tillage_depth, crop_type, etc."
+          },
+          "data_display_type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DataDisplayType"
+              }
+            ],
+            "description": "Type of the data to be displayed in the column",
+            "default": "text"
+          },
+          "data_options": {
+            "title": "Data Options",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Options for the data display type",
+            "default": []
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "SupportedDataTypes": {
+        "title": "SupportedDataTypes",
+        "enum": [
+          "tillage_depth",
+          "crop_type",
+          "comments",
+          "tilled",
+          "external_account_id"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "UpdateCustomerDisplayConfigurationRequest": {
+        "title": "UpdateCustomerDisplayConfigurationRequest",
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "integer"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "is_default": {
+            "title": "Is Default",
+            "type": "boolean"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "start_year": {
+            "title": "Start Year",
+            "type": "integer"
+          },
+          "end_year": {
+            "title": "End Year",
+            "type": "integer"
+          }
+        }
+      },
+      "UpdateDisplayColumnRequest": {
+        "title": "UpdateDisplayColumnRequest",
+        "type": "object",
+        "properties": {
+          "customer_display_configuration_id": {
+            "title": "Customer Display Configuration Id",
+            "type": "integer"
+          },
+          "column_label": {
+            "title": "Column Label",
+            "type": "string"
+          },
+          "column_order": {
+            "title": "Column Order",
+            "type": "integer"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "data_type": {
+            "$ref": "#/components/schemas/SupportedDataTypes"
+          },
+          "data_display_type": {
+            "$ref": "#/components/schemas/DataDisplayType"
+          },
+          "data_options": {
+            "title": "Data Options",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "User": {
+        "title": "User",
+        "required": ["name", "email", "customer_id"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "integer"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UserCreateRequest": {
+        "title": "UserCreateRequest",
+        "required": ["name", "email", "customer_id"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": ["loc", "msg", "type"],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

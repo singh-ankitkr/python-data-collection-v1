@@ -1,66 +1,133 @@
-# Backend Interview Coding Challenge
-This challenge is based on a simplified design challenge the Regrow engineering team has had to solve.
+# Assumptions
+### Crop Cycles
+ - In a year a customer can have multiple crop cycles depending on the regions, weather conditions, etc.
+    - I have created a field crop_cycle to store this information.
+    - It is an integer with a value 1, 2, 3, 4 etc, which internally may mean different crop cycles of a year like summer, spring, winter, fall, etc.
+    - A combination of year and crop_cycle uniquely determines the chronology of associated data
 
-There is no expectation to get through all of this task, rather, we want to see how you think and how you approach problems. 
+### Customer and Users
+ - A customer can have multiple users.
+    - There can be multiple users associated with a customer
+    - They all can see all the different combination/view of the data.
+    - Have created the display configurations associated with Customer rather than users.
 
-If you are completing this task live, please ask as many questions as you want. The more, the merrier!
+### Minimum and Maximum year
+- Assumed that the minimum year we wish to collect from is 1980. This is completely arbitrary and can be changed as per the context.
+- Assumed that the maximum year we wish to collect is the current year. It causes a limitation that data can be filled for upcoming crop_cycles of the year.
 
-If you have elected to do this as a take home, we are more interested in how you approached the problem, and the assumptions/decisions you made in your solution, rather than the efficiency or beauty of your code. Please feel free to contact Regrow (via your recruiter or our People team) for clarification on the task requirements. Alternatively you may wish to make an assumption and proceed. You are welcome to do this, we are evalulating problem solving and design rather than replicating a particular correct answer. However, in this case please document any assumptions you are making.
+### Supported Data Types 
+- These are the different of data entities we want to collect from the customer.
+- Currently only supporting these via an enum
+    - tillage_depth (Depth of tillage)
+    - crop_type
+    - comments
+    - tilled (A boolean)
+    - external_account_id
+- It is expandable by adding more data dimension to the enum and adding appropriate validations for them.
 
-## Prologue, Setup
-We have tested this using python 3.11.1. It may work on other versions, but for safety please use that revision.
-Both a `pipfile` and `requirements.txt` are provided and contain all the packages you need. You can use more packages if you want.
-
-In this zip file, we have created a boilerplate service. It has some methods as examples, that for basic usage, are correct. It should cover most of the methods required to complete this task.
-
-All database tables are created in a file `database.db` via `sqlite`. Delete this file and restart the service to have it create your changed tables.
-
-## The Problem: 
-In one particular part of our system, we need to collect some information from farmers. Specifically, we need to ask them about what farming practices they have performed on their fields over the last several years.
-
-For reference, the UI will render the table something like:
-
-![A Table](sample_table.png "Table View")
-
-Typically, a table may look like this example:
-
-| Year | Crop Type | Tillage Depth | Comments |
-| --- | --- | --- | --- |
-| Four digit number | Constrained Picklist (might be [corn, wheat, barley, hops...] | Constrained Float ie must be `0 <= x < 10`, can be optionally filled  | String |
-
-However, due to the flexibility of our offering, this is not the only data we want to collect. We may want to collect something like:
-
-| Year | Tilled? | External Account ID | Tillage Depth |
-| --- | --- | --- | --- |
-| Four digit number | Bool | Regex Validated String | Slider Control mapped to a float |
-
-By the same token, we may want some other, unique set of columns that are picked from both the examples. You need to design and implement a solution that would let you represent both examples and any combination/permuation of their constituent columns.
-
-Additionally, as per the screenshot, some configuration must be present to tell the UI how many years of data we wish to collect (hence how many rows to render).
-
-In the future we may want to collect other information too; these columns are not fixed.
-
-The UI will take your configuration and use it to render its data collection table. You don't need to save the actual values users enter, just the configuration for the table.
-
-It is your task to:
-- Define and implement a database schema that can store this configuration.
-- Expose a REST API to create/delete these entities.
-- Handle some validation of inputs where sensible.
-
-Important notes:
-- Please don't actually store any data; we are only interested in this task of how you would store the table schema. This is to specifically make the task shorter.
+### Supported Display Types
+- Assumed that the display types we are supporting are
+    - slider
+    - picklist
+    - text
+    - float, boolean and integer
+- Based on this assumption written validation logic for these display types.
+- In the future we may want to expand it to include some other display types. Its an enum and in a way extensible by adding more to it (along with writing the corresponding validations.)
 
 
-## Submission:
+### Supported Crop Types
+- Its an enum with the crops
+    - corn
+    - soybean
+    - wheat
+    - hops
+- Can be expanded by adding more crops to the enum.
 
-Please duplicate this repository.
 
-Follow the instructions here: https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository#mirroring-a-repository
+# Deployment
+### Running the server locally
+- clone the repository
+- From terminal
+    - cd into the repository
+    - pip install -r requirements
+    - uvicorn src.main:app --reload --workers 1
+- The api documentation (swagger) would be available on urls
+    - `http://localhost:8000/docs` (For running and testing the apis.)
+    - `http://localhost:8000/redoc` (For checking the request/response definition.)
 
-Please **do not fork** the repository.
+### Running the tests
+- From terminal (option 1)
+    - `rm -f test.db`
+    - `db_path="test.db" pytest -x -vv`
+- From makefile (option 2)
+    - Run the `test` section of the file `makefile`
 
-We encourage you to edit the README, or create an additional file, to explain your solution. You may also add comments to the code explaining elements of your solution, these will be read.
 
-*Let the Regrow team know, via your point of contact (either a recruiter or our internal people team), when you are ready for us to review.** At this point you will add us as collaborators on your repository so we can view your solution. Do not raise a pull-request against the original repository.
+# Implementation Logic
+### CustomerDisplayConfiguration
+    This represents a particular tabular view for a customer
 
-Good luck!
+### DisplayColumn
+- This represents a particular column in a CustomerDisplayConfiguration (tabular view).
+
+    - The combination of the fields `data_display_type` and `data_options` can be used to define how we want to display a field.
+        - example 1: For `data_display_type` of `"picklist"` and `data_options` as `["wheat", "corn", "soybean", "hops"]` can be used to display a picklist with the array values `["wheat", "corn", "soybean", "hops"]` as picklist items to select from
+        - example 2: `"slider"` (`data_display_type`) and `"[0, 10, 0.1]"` (`data_options`) denotes a slider on the frontend with the left value as 0, rightmost as 10 and a slide step of 0.1
+        - As of now, for other types of `data_display_type` (text, boolean, float, integer), `data_options` has no meaning should be empty.
+
+    - data_type represents the data dimension (`tillage_depth, crop_type, tilled, etc`) this column displays.
+        - It is particularly important as it used to map the data from source table `SourceData`, to a particular row based on the chronology (`year` and `crop_cycle` combination)
+
+### SourceData
+- Assumption/Representation of how the `SourceData` table. 
+    - Combination of `year` and `crop_cycle` tells us when this data is for.
+    - `value` stores the value of the data entity as a string.
+    - `data_type` (`tillage_depth, crop_type, tilled, etc`) tells what the value represents.
+        - Logic for having `data_type` on both `SourceData` and `DisplayColumn`
+            - To show the values for a particular `customer`, between a `start_year` and `end_year` (based on a `CustomerDisplayRepresentation`) I am thinking the following steps
+                - step 1: Get all data points (all `SourceData`) where the `year` lies between start and end years.
+                - step 2: Group the data by combination of `year` and `crop_cycle`. (lets call it a row)
+                - step 3: Sort the rows in `descending` order based on combination of `year` and `crop_cycle`. (chronologically sorted rows in descending order)
+
+                - step 5: Get all the `DisplayColumn`s for the particular `CustomerDisplayConfiguration` which are `is_active`
+                - step 6: Map the data entities in the row (from step 3) with the `DisplayColumn` objects using matching `data_type` on both `SourceData` and `DisplayColumn`
+                - step 7: Use `column_order` from corresponding `DisplayColumn` object to place data entity of row from `SourceData` to appropriate column.
+        - Also, the year goes to the leftmost position.
+            - All other entities are placed column wise in a row on the basis of ascending `column_order`
+    - `value_type` - This is not being used currently, but it stores the type of the value (int, float, bool, etc) we are storing as string. Can later be useful.
+    
+
+# Validations
+- The model validators are written in the models using the fastApi decorator @validator.
+
+# Pros
+- Expandable design and can be easily expanded to display other display_types and data entities
+- View related configs are separate from data.
+    - All view related configs are in CustomerDisplayConfiguration and DisplayColumn
+    - SourceData only contains data and information related to data
+    - This makes it possible to have data without duplicacy and easier maintainence of source of truth.
+
+# Cons
+- All data is stored as its string format, which makes queries which depend on arithmatic operations on those data difficult.
+    - example - sql query to get all the years where tillage_depth was more that 6, would be more difficult
+- All data entities are generalized and stored in the same format, making queries which depend of multiple data entities difficult.
+    - example - sql query to get all years where the `crop_type` was `wheat` and the customer got his farmland `tilled`, (This would not be trivial)
+
+# Alternate Solutions
+- Store the data in a table with exhaustive columns
+    - id | tillage_depth | tilled | crop_type | comments | external_account_id | ...other fields... | created_at | updated_at
+    - For adding new field the table would need to be updated
+- Store the display configurations as JSON either in postgres or in some document based data store.
+    - id | customer_id | display_config | created_at | updated_at
+    where display_config can be JSON
+    `{columns: [{data_type: "tilled_depth", display_order: 1, display_type: "slider", display_options: [0, 10, 0.5]}, {data_type: "crop_type", display_order: 2, display_type: "picklist", display_options: ["wheat", "corn"]} , {"comments", display_order: 3, display_type: "text"}]}`
+
+
+# API requests
+- The api documentation (swagger) would be available on urls (Option 1)
+    - `http://localhost:8000/docs` (For running and testing the apis.)
+    - `http://localhost:8000/redoc` (For checking the request/response definition.)
+
+- The file `request_doc.json` can be imported to `POSTMAN` rest api client. (Option 2)
+
+- The test file `test_apis.py` also contains apis which are called with sample data.
